@@ -191,7 +191,7 @@ workflows:
 
       # - create_infrastructure
       # - configure_infrastructure
-      # - create_and_deploy_front_end
+      - create_and_deploy_front_end
 
       # - get_last_deployment_id
 
