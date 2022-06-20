@@ -7,6 +7,28 @@ Description: infrastructure creation job
 
 Resources:
 
+  RoleForUdacityS3ReadOnlyEC2: 
+    Type: "AWS::IAM::Role"
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - ec2.amazonaws.com
+            Action:
+              - 'sts:AssumeRole'
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess
+  
+  ProfileWithRolesForOurApp:
+    Type: AWS::IAM::InstanceProfile
+    Properties: 
+      Roles:
+        - !Ref RoleForUdacityS3ReadOnlyEC2
+
+
   EC2Instance:
     Type: 'AWS::EC2::Instance'
     Properties:
@@ -30,4 +52,9 @@ Resources:
         - IpProtocol: tcp
           FromPort: '22'
           ToPort: '22'
+          CidrIp: 0.0.0.0/0 
+
+        - IpProtocol: tcp
+          FromPort: '3000'
+          ToPort: '3000'
           CidrIp: 0.0.0.0/0 
