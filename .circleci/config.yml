@@ -38,23 +38,23 @@ jobs:
 
 
 
-  # Exercise: Config and Deployment
-  # configure_infrastructure: 
-  #   docker:
-  #     - image: python:3.7-alpine3.11
-  #   steps:
-  #     - checkout
-  #     - add_ssh_keys:
-  #         fingerprints: ["SHA256:6B5+9292Z5XDO/4rAHSdzDz5BrJHgTELGmaGsSmaQ9s"] # You can get this ID in the section where you registered the SSH Key
-  #     - run:
-  #         name: Install dependencies
-  #         command: |
-  #           # install the dependencies needed for your playbook
-  #           apk add --update ansible 
-  #     - run:
-  #         name: Configure server
-  #         command: |
-  #           ansible-playbook -i inventory.txt main4.yml       
+  Exercise: Config and Deployment
+  configure_infrastructure: 
+    docker:
+      - image: python:3.7-alpine3.11
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints: ["SHA256:6B5+9292Z5XDO/4rAHSdzDz5BrJHgTELGmaGsSmaQ9s"] # You can get this ID in the section where you registered the SSH Key
+      - run:
+          name: Install dependencies
+          command: |
+            # install the dependencies needed for your playbook
+            apk add --update ansible 
+      - run:
+          name: Configure server
+          command: |
+            ansible-playbook -i inventory.txt main4.yml       
 
   # Exercise: Smoke Testing
   smoke_test:
@@ -82,7 +82,6 @@ workflows:
   # Name the workflow
   my_workflow:
     jobs:
-      # - create_infrastructure
-      # - configure_infrastructure
-      - smoke_test
-      
+      - create_infrastructure
+      - configure_infrastructure
+      # - smoke_test
